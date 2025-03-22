@@ -18,8 +18,11 @@ import java.util.UUID;
 @Service
 public class WalletService {
 
-    @Autowired
-    WalletRepo walletRepo;
+    private final WalletRepo walletRepo;
+
+    public WalletService(WalletRepo walletRepo) {
+        this.walletRepo = walletRepo;
+    }
 
     public ResponseEntity<WalletDto> getWallet(UUID uuid) {
         WalletDto wallet = walletRepo.getWallet(uuid);
