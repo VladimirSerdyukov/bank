@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="insert-wallet" author="SV">
+        <insert tableName="wallet">
+            <column name="amount">0</column>
+            <column name="wallet_id">643e2777-8cb8-446b-b1d1-5bb56679744d</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

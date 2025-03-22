@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  client-backend:
+    image: bank-0.0.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8181:8181"
+    depends_on:
+      - service-db
+    environment:
+      - SERVER_PORT= 8181
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db/toy_bank
+
+  service-db:
+    image: postgres:14.7-alpine
+    environment:
+#      POSTGRES_DB: toy_bank
+      POSTGRES_USER: creator
+      POSTGRES_PASSWORD: 1111
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./infrastructure/db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+#      - toy_bank-data:/var/lib/postgresql/toy_bank
+    restart: unless-stopped
+
