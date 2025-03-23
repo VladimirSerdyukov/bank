@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.testservice.demo.dto.WalletDto;
 import ru.testservice.demo.exceptions.NoMoneyException;
+import ru.testservice.demo.exceptions.NoUuidInMemory;
 import ru.testservice.demo.models.Wallet;
 
 import java.util.UUID;
@@ -41,7 +42,12 @@ public class WalletRepoImpl implements WalletRepo {
     }
 
     @Override
-    public WalletDto getWallet(UUID uuid) {
-        return new WalletDto(em.find(Wallet.class, uuid));
+    public WalletDto getWallet(UUID uuid) throws NoUuidInMemory {
+        WalletDto walletDto = new WalletDto(em.find(Wallet.class, uuid));
+        if(walletDto == null) {
+            throw new NoUuidInMemory();
+        } else {
+            return walletDto;
+        }
     }
 }

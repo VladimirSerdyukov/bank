@@ -52,6 +52,12 @@ public class GlobalExceptionHandler {
         logError(e);
         return ResponseEntity.badRequest().body("Не корректный запрос");
     }
+
+    @ExceptionHandler(NoUuidInMemory.class)
+    public ResponseEntity<String> handlerException(NoUuidInMemory e) {
+        logError(e);
+        return ResponseEntity.badRequest().body("UUID отсутствует в БД");
+    }
     private void logError(Exception e) {
         System.out.println(e.getMessage());
     }

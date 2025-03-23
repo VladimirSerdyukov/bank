@@ -6,12 +6,23 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8181:8181"
+      - "8080:8080"
     depends_on:
       - service-db
+      - rabbitmq
     environment:
-      - SERVER_PORT= 8181
+      - SERVER_PORT= 8080
       - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db/toy_bank
+
+  rabbitmq:
+      image: rabbitmq:3-management-alpine
+      environment:
+        - RABBITMQ_DEFAULT_PASS=localhost
+        - RABBITMQ_DEFAULT_PASS=pass
+        - RABBITMQ_DEFAULT_USER=user
+      ports:
+        - "5672:5672"
+        - "15672:15672"
 
   service-db:
     image: postgres:14.7-alpine
