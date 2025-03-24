@@ -23,6 +23,12 @@ public class WalletDto {
         this.walletId = wallet.getId();
     }
 
+    public WalletDto(UUID walletId, Operation operationType, Long amount) {
+        this.walletId = walletId;
+        this.operationType = operationType;
+        this.amount = amount;
+    }
+
     public UUID getWalletId() {
         return walletId;
     }
@@ -50,6 +56,7 @@ public class WalletDto {
     @JsonIgnore
     public Wallet getWallet() {
         Wallet wallet = new Wallet();
+        wallet.setId(this.walletId);
         wallet.setAmount(this.getAmount());
         wallet.setId(this.getWalletId());
         return wallet;

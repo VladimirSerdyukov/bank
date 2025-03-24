@@ -10,5 +10,4 @@
             <column name="wallet_id">643e2777-8cb8-446b-b1d1-5bb56679744d</column>
         </insert>
     </changeSet>
-
 </databaseChangeLog>

@@ -1,1 +1,0 @@
-create database toy_bank;

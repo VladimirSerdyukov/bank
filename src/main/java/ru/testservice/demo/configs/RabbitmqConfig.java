@@ -3,15 +3,19 @@ package ru.testservice.demo.configs;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitmqConfig {
 
+    @Value("${spring.rabbitmq.host}")
+    String host;
+
     @Bean
     public CachingConnectionFactory connectionFactory(){
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(host);
         connectionFactory.setUsername("user");
         connectionFactory.setPassword("pass");
         return connectionFactory;

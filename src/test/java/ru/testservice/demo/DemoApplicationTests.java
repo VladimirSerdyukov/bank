@@ -9,6 +9,7 @@ import ru.testservice.demo.controllers.WalletController;
 import ru.testservice.demo.dto.WalletDto;
 import ru.testservice.demo.exceptions.NoMoneyException;
 import ru.testservice.demo.exceptions.NoOperationException;
+import ru.testservice.demo.exceptions.NoUuidInMemory;
 import ru.testservice.demo.staticEntity.Operation;
 
 import java.util.Objects;
@@ -31,8 +32,22 @@ class DemoApplicationTests {
 
 	@Test
 	void getWalletTest() {
+        try {
+            WalletDto w = walletController.updateWallet(new WalletDto(UUID.randomUUID(), Operation.DEPOSIT, 1000L)).getBody();
+			w = walletController.getWallet(UUID.fromString("643e2777-8cb8-446b-b1d1-5bb56679744d")).getBody();
+        } catch (NoMoneyException | NoOperationException e) {
+            throw new RuntimeException(e);
+        }
+        walletController.getWallet(UUID.randomUUID());
+
 		ResponseEntity<WalletDto> entity = walletController.getWallet(UUID.fromString("643e2777-8cb8-446b-b1d1-5bb56679744d"));
-		assertThat(entity.getStatusCode(), is(HttpStatus.OK));
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertThat(entity.getStatusCode(), is(HttpStatus.OK));
 		assertThat(entity.getBody().getWalletId(), is(UUID.fromString("643e2777-8cb8-446b-b1d1-5bb56679744d")));
 		assertThat(entity.getBody().getAmount(), is(notNullValue()));
 	}
@@ -51,7 +66,11 @@ class DemoApplicationTests {
 
 		ResponseEntity<WalletDto> responseTestMethod = walletController.updateWallet(walletReq);
 		WalletDto testWallet = responseTestMethod.getBody();
-
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
 		assertThat(Objects.equals(testWallet, preTestWallet), is(true));
 	}
 
@@ -69,6 +88,12 @@ class DemoApplicationTests {
 
 		ResponseEntity<WalletDto> responseTestMethod = walletController.updateWallet(walletReq);
 		WalletDto testWallet = responseTestMethod.getBody();
+
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
 
 		assertThat(Objects.equals(testWallet, preTestWallet), is(true));
 	}
